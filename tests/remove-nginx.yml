@@ -1,0 +1,39 @@
+- hosts: test
+  remote_user: root
+  vars: 
+    workers: 500
+
+  tasks:
+  - name: Remove nginx
+    yum:
+      name: nginx 
+      state: removed
+
+  - name: Remove php-fpm
+    yum: 
+      name: php-fpm
+      state: removed
+
+  - name: User Removal
+    user:
+      name: webdev
+      state: absent
+      comment: "Web Developement"
+
+  - name: DeleteWebroot
+    file:
+      path: /var/www/vhosts/dev
+      state: absent
+
+#################################
+
+  handlers:
+
+  - name: StopNginx
+    service:
+      name: nginx
+      state: stopped
+  - name: DisableNginx
+    service:
+      service: nginx
+      enabled: no

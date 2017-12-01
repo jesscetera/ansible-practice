@@ -1,0 +1,80 @@
+- hosts: test
+  remote_user: root
+  vars: 
+    workers: 500
+
+  tasks:
+  - name: Install nginx
+    yum:
+      name: nginx 
+      state: latest
+    notify:
+      - StartNginx
+      - EnableNginx
+
+  - name: Install php-fpm
+    yum:
+      name: php-fpm
+      state: latest
+    notify: 
+      - StartFPM
+      - EnableFPM
+
+  - name: User Creation
+    user:
+      name: webdev
+      state: present
+      comment: "Web Developement"
+      home: /var/www/vhosts/dev
+      groups: nginx
+  - name: CreateWebroot
+    file:
+      path: /var/www/vhosts/dev
+      state: directory
+      mode: 0775
+      owner: webdev
+      group: nginx
+      recurse: yes
+
+#  - name: Configuration
+#    file:
+#      path: /etc/nginx/
+#      backup: yes
+#      regexp:
+#      replace: 
+#      validate: /usr/sbin/nginx -c %s -t
+
+  - name: EnsureService
+    service:
+      name: nginx
+      state: started
+
+#################################
+
+  handlers:
+
+  - name: StartNginx
+    service:
+      name: nginx
+      state: started
+  - name: EnableNginx
+    service:
+      service: nginx
+      enabled: yes
+  - name: ReloadNginx
+    service:
+      name: nginx
+      state: reloaded
+
+    name: StartFPM
+    service:
+      name: php-fpm
+      state: started
+    name: EnableFPM
+    service:
+      name: php-fpm
+      enabled: yes
+    name: ReloadFPM
+    service:
+      name: php-fpm
+      state: reloaded

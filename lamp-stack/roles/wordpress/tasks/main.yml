@@ -1,0 +1,46 @@
+- name: Create site directory
+  file: 
+    path: /var/www/vhosts/
+    state: directory
+
+- name: Download WordPress
+  get_url: url=http://wordpress.org/wordpress-{{ wp_version }}.tar.gz dest=/var/www/vhosts/wordpress-{{ wp_version }}.tar.gz
+
+- name: Extract archive
+  command: chdir=/var/www/vhosts/ /bin/tar -xvf wordpress-{{ wp_version }}.tar.gz creates=/var/www/vhosts/wordpress
+
+- name: Add group "wordpress"
+  group:
+    name: wordpress
+
+- name: Add user "wordpress"
+  user:
+    name: wordpress
+    group: wordpress
+    home: /var/www/vhosts/wordpress/
+
+- name: Create WordPress database
+  mysql_db:
+    name: "{{ wp_db_name }}"
+    state: present
+
+- name: Create WordPress database user
+  mysql_user:
+    name: "{{ wp_db_user }}"
+    password: "{{ wp_db_password }}"
+    priv: "{{ wp_db_name }}.*:ALL"
+    host: 'localhost'
+    state: present
+
+- name: Copy WordPress config file
+  template:
+    src: wp-config.php
+    dest: /var/www/vhosts/wordpress/
+
+- name: Change ownership of WordPress installation
+  file:
+    path: /var/www/vhosts/wordpress/
+    owner: wordpress
+    group: wordpress
+    state: directory
+    recurse: yes
