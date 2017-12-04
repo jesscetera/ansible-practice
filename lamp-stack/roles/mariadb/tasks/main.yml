@@ -27,6 +27,7 @@
      state: started
      enabled: yes
 
+# Need to figure out how to implement this only for and in a multi-server setup
 # - name: Insert firewalld rule
 #   firewalld:
 #     port: "{{ mysql_port }}/tcp"
