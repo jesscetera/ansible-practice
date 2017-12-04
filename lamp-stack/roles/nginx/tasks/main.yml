@@ -3,12 +3,12 @@
     name: nginx
     state: present
 
-- name: Add configuration for default site
-  template: src=default.conf dest=/etc/nginx/conf.d/default.conf
-
-- name: Replace configuration to set default site properly
-  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+- name: Add configuration for new site
+  template: src=new_site.conf dest="/etc/nginx/conf.d/{{ server_hostname }}.conf"
   notify: restart nginx
+
+#- name: Replace configuration to set default site properly
+#  template: src=nginx.conf dest=/etc/nginx/nginx.conf
 
 - name: Insert firewalld rule for web access
   firewalld:

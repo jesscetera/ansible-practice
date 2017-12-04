@@ -20,8 +20,8 @@
 
 - name: Copy php-fpm configuration
   template:
-    src: wordpress.conf
-    dest: /etc/php-fpm.d/
+    src: new_site.conf
+    dest: "/etc/php-fpm.d/{{ server_hostname }}.conf"
   notify: restart php-fpm
 
 - name: php-fpm service state
