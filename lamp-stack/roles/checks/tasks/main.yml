@@ -1,20 +1,6 @@
-#- name: Pull Site for Content Matchi
-#  action: uri url=http://{{ ansible_play_hosts }} return_content=yes follow_redirects=all
-#  register: webpage
-
-#- name: Check Site for Content Match
-#  fail: msg='service is not happy'
-#  when: '"{{ content_match }}" not in webpage.content'
-
 
 - name: Curl new site for status code
   command: "curl -I http://{{ ansible_host }} -H 'Host: {{ server_hostname }}'"
   register: out
 - debug: var=out.stdout_lines
 
-#- name: wait for domain to be up
-#  uri: url=http://{{ansible_host}}:{{nginx_port}} follow_redirects=none
-#  register: result
-#  until: result.status == "302"
-#  retries: 3
-#  delay: 10

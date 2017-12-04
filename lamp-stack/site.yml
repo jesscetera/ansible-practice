@@ -9,5 +9,6 @@
     - common
     - mariadb
     - nginx
-    - php-fpm
     - wordpress
+    - php-fpm
+    - checks
