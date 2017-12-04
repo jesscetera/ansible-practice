@@ -1,0 +1,17 @@
+- name: Remove web service
+  yum:
+    name: nginx
+    state: removed
+
+- name: Disable configuration for site
+  file:
+    state: absent
+    path: "/etc/nginx/conf.d/{{ server_hostname }}.conf"
+
+- name: Remove firewalld rule for web access
+  firewalld:
+    port: "{{ web_port }}/tcp"
+    permanent: true
+    state: disabled
+    immediate: yes
+  ignore_errors: yes

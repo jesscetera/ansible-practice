@@ -1,0 +1,22 @@
+ - name: Remove MariaDB package
+   yum: name="{{ item }}" state=removed
+   with_items:
+     - mariadb-server
+     - MySQL-python
+     - libselinux-python
+     - libsemanage-python
+
+ - name: Remove Mysql configuration file
+   file:
+     state: absent
+     path: /etc/my.cnf
+
+ - name: Remove MariaDB log file
+   file: 
+     state: absent
+     path: /var/log/mysqld.log
+
+ - name: Remove MariaDB files
+   file:
+     state: absent
+     path: /var/lib/mysql/

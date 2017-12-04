@@ -1,0 +1,20 @@
+- name: Remove php-fpm and dependencies
+  yum:
+    name: "{{ item }}"
+    state: removed
+  with_items:
+    - php
+    - php-fpm
+    - php-enchant
+    - php-IDNA_Convert
+    - php-mbstring
+    - php-mysql
+    - php-PHPMailer
+    - php-process
+    - php-simplepie
+    - php-xml
+
+- name: Remove pools
+  file:
+    state: absent
+    path: "/etc/php-fpm.d/{{ server_hostname }}.conf"

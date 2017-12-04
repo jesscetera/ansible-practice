@@ -1,0 +1,23 @@
+# Database Variables
+mysql_service: mysqld
+mysql_port: 3306
+wp_db_name: wordpress
+wp_db_user: wordpress
+# need to figure out more secure method to set this
+wp_db_password: "Chiuthe3omum"
+
+# Web Service Configuration
+web_port: 80
+server_hostname: server.example.com
+site_root: /var/www/vhosts/wordpress
+
+# For SFTP / Permissions / Etc
+group_name: wordpress
+username: wordpress
+# need to figure out more secure method to set this
+password: "Chiuthe3omum"
+
+# Wordpress Variables
+wp_version: 4.9.1
+auto_up_disable: false
+core_update_level: true

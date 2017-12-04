@@ -1,0 +1,14 @@
+- name: Remove site directory and content
+  file:
+    path: "{{ site_root }}"
+    state: absent
+
+- name: Remove user
+  user:
+    name: "{{ username }}"
+    state: absent
+
+- name: Remove group
+  group:
+    name: "{{ group_name }}"
+    state: absent

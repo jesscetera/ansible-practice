@@ -1,0 +1,12 @@
+
+- name: Remove WordPress, MariaDB, Nginx, and PHP-FPM
+  remote_user: root
+  hosts: all
+  # remote_user: user
+  # sudo: yes
+
+  roles:
+    - mariadb
+    - nginx
+    - wordpress
+    - php-fpm
