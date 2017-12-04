@@ -1,19 +1,18 @@
 wp_version: 4.9.1
-#wp_sha256sum: 
 
 mysql_service: mysqld
 mysql_port: 3306
 
 wp_db_name: wordpress
 wp_db_user: wordpress
-wp_db_password: "itsasecret"
+wp_db_password: ""
 
 nginx_port: 80
 server_hostname: server.example.com
 site_root: /var/www/vhosts/wordpress
 
 ftp_name: ftp_wordpress
-ftp_password: "itsasecret"
+ftp_password: ""
 
 auto_up_disable: false
 core_update_level: true
