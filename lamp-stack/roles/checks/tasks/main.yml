@@ -1,6 +1,7 @@
 
 - name: Curl new site for status code
   command: "curl -I http://{{ ansible_host }} -H 'Host: {{ server_hostname }}'"
+  #command: "curl -I http://162.209.78.166 -H 'Host: {{ server_hostname }}'"
   register: out
 - debug: var=out.stdout_lines
 

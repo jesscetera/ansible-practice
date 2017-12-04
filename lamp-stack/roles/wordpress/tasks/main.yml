@@ -10,14 +10,14 @@
     dest: "{{ site_root }}"
     remote_src: yes
 
-- name: Add group "wordpress"
+- name: Add group
   group:
-    name: wordpress
+    name: "{{ group_name }}"
 
-- name: Add user "wordpress"
+- name: Add user
   user:
-    name: wordpress
-    group: wordpress
+    name: "{{ username }}"
+    group: "{{ group_name }}"
     home: "{{ site_root }}"
 
 - name: Create WordPress database
@@ -41,8 +41,8 @@
 - name: Change ownership of WordPress installation
   file:
     path: "{{ site_root }}"
-    owner: wordpress
-    group: wordpress
+    owner: "{{ username }}"
+    group: "{{ group_name }}"
     state: directory
     recurse: yes
 

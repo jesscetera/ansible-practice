@@ -27,10 +27,10 @@
      state: started
      enabled: yes
 
- - name: insert firewalld rule
-   firewalld:
-     port: "{{ mysql_port }}/tcp"
-     permanent: true
-     state: enabled
-     immediate: yes
-   ignore_errors: yes
+# - name: Insert firewalld rule
+#   firewalld:
+#     port: "{{ mysql_port }}/tcp"
+#     permanent: true
+#     state: enabled
+#     immediate: yes
+#   ignore_errors: yes

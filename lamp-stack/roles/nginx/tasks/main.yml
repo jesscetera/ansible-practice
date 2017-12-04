@@ -1,24 +1,24 @@
-- name: Install nginx
+- name: Install web service
   yum:
     name: nginx
     state: present
 
-- name: nginx configuration for wordpress default site
+- name: Add configuration for default site
   template: src=default.conf dest=/etc/nginx/conf.d/default.conf
 
-- name: Replace nginx configuration to set default site properly
+- name: Replace configuration to set default site properly
   template: src=nginx.conf dest=/etc/nginx/nginx.conf
   notify: restart nginx
 
-- name: insert firewalld rule for nginx
+- name: Insert firewalld rule for web access
   firewalld:
-    port: "{{ nginx_port }}/tcp"
+    port: "{{ web_port }}/tcp"
     permanent: true
     state: enabled
     immediate: yes
   ignore_errors: yes
 
-- name: web service state
+- name: Web service state
   service:
     name: nginx
     state: started
