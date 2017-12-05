@@ -1,3 +1,8 @@
 user_name: 
 home_directory: 
-group_memberships: 
+password: 
+
+# Group to use in the SSH configuration to ensure chroot set 
+chroot_group:
+# Additional groups as needed
+groups: 

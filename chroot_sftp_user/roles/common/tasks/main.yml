@@ -1,0 +1,34 @@
+- name: Ensure sftponly group exists
+  group:
+    name: "{{ chroot_group }}"
+    state: present
+
+- name: User Creation
+  user:
+    name: "{{ user_name }}"
+    groups: "{{ chroot_group }},{{ groups }}"
+    home: "{{ home_directory }}"
+    append: yes
+    shell: /sbin/nologin
+    password: "{{ password }}"
+    update_password: on_create
+    state: present
+
+- name: Replace default sftp subsystem line with apropriate one
+  replace:
+    path: /etc/ssh/sshd_config
+    regexp: 'Subsystem      sftp    \/usr\/libexec\/openssh\/sftp-server'
+    replace: 'Subsystem       sftp    internal-sftp'
+    backup: yes
+    validate: '/usr/bin/sshd -t'
+
+- name: Ensure Match group line present in config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: '{{ item }}'
+  with_items:
+    - 'Match Group sftpusers'
+    - '        ChrootDirectory /sftp/%u'
+    - '        ForceCommand internal-sftp'
+  validate: '/usr/bin/sshd -t'
+  notify: restart_sshd
