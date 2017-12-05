@@ -1,0 +1,6 @@
+- name: Create a chrooted SFTP user
+  remote_user: root
+  hosts: all
+
+  roles:
+    - common
